@@ -50,6 +50,27 @@
     insertionNode[insertionMethod](contentNode);
 
     $this.parent().trigger('insertion-callback');
+    $('input.ui-date-picker').datepicker({dateFormat: "yy-mm-dd"});
+    $('.chzn-select').chosen({width:"100%"});
+      var checkOnce = function(input){
+         if(input.is(":checked")) {
+           var col = input.attr("id").replace("finding_show_","");
+           var selected = $("#finding_"+col+"_column").chosen().val();
+           $("#vulns tr td:nth-child(" + ($('#vulns th#'+selected).index()+1) + ")").show();
+           $('#vulns th#'+selected).show();
+         }else{
+           var col = input.attr("id").replace("finding_show_","");
+           var selected = $("#finding_"+col+"_column").chosen().val();
+           $("#vulns tr td:nth-child(" + ($('#vulns th#'+selected).index()+1) + ")").hide();
+           $('#vulns th#'+selected).hide();
+         }
+       }
+    $("#vulns tr td").hide();
+    $("#vulns tr td:nth-child(1)").show();
+    checkOnce($('#finding_show_ip'));
+    checkOnce($('#finding_show_url'));
+    checkOnce($('#finding_show_os'));
+    checkOnce($('#finding_show_module'));
   });
 
   $('.remove_fields.dynamic').live('click', function(e) {
@@ -72,3 +93,4 @@
   });
 
 })(jQuery);
+

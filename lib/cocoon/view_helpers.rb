@@ -84,16 +84,29 @@ module Cocoon
     # will create new Comment with author "Admin"
 
     def create_object(f, association)
+      Rails.logger.warn "Getting Assoc"
       assoc = f.object.class.reflect_on_association(association)
+      Rails.logger.warn "Got Assoc: #{assoc}"
 
       if assoc.class.name == "Mongoid::Relations::Metadata"
         conditions = assoc.respond_to?(:conditions) ? assoc.conditions.flatten : []
         assoc.klass.new(*conditions)
       else
         # assume ActiveRecord or compatible
+        Rails.logger.warn "Is Collection? : #{assoc.collection?}"
         if assoc.collection?
-          f.object.send(association).build
+          Rails.logger.warn "Building assoc with f:#{f}"
+          Rails.logger.warn "Building assoc with object:#{f.object}"
+          Rails.logger.warn "Building assoc with association:#{association}"
+          Rails.logger.warn "Building assoc with send:#{f.object.send(association)}"
+          ab = f.object.send(association).build
+          ab.delete
+          Rails.logger.warn "Building assoc:#{ab}"
+          ab
         else
+          Rails.logger.warn "1Building assoc with f:#{f}"
+          Rails.logger.warn "1Building assoc with object:#{f.object}"
+          Rails.logger.warn "1Building assoc with association:#{association}"
           f.object.send("build_#{association}")
         end
       end
