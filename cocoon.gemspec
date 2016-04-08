@@ -112,7 +112,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<actionpack>, [">= 3.0.0"])
     s.add_dependency(%q<simplecov>, [">= 0"])
     s.add_dependency(%q<generator_spec>, [">= 0"])
-    s.add_dependency(%q<rspec>, [">= 2.0.0"])
+    s.add_dependency(%q<rspec>, [">= 2.0.0", ">= 2.6.0"])
   end
 end
 
